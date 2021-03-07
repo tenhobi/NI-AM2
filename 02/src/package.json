@@ -1,0 +1,12 @@
+{
+  "name": "ni-am2-bittnja3-hw-2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+  },
+  "author": "Jan Bittner",
+  "license": "MIT",
+  "dependencies": {
+  }
+}

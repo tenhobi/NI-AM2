@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>NI-AM2 HW2</title>
+
+    <script>
+        let lastStatus;
+
+        // Helper function to set info element and outputs console log, both only on change.
+        function setOutput(text) {
+            if (lastStatus === text) return;
+            lastStatus = text;
+            let element = document.getElementById("info");
+            element.innerText = text;
+            console.log(text);
+        }
+
+        // Handler for element on click event.
+        // Awaits function which processes request.
+        async function onClickHandler() {
+            let result = await makeRequest('https://cdn.jsdelivr.net/pyodide/v0.16.1/full/scipy.data');
+            if (result) {
+                setOutput('FINISHED DOWNLOADING - OK');
+            } else {
+                setOutput('FINISHED DOWNLOADING - ERROR');
+            }
+        }
+
+        // Creates a Promise which returns true on success download and false on error.
+        function makeRequest(url) {
+            return new Promise(resolve => {
+                let xhr = new XMLHttpRequest();
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 3) {
+                        setOutput('DOWNLOADING');
+                    }
+                }
+
+                xhr.onload = (_) => {
+                    resolve(true);
+                }
+
+                xhr.onerror = (ev) => {
+                    console.log('error', ev);
+                    resolve(false);
+                }
+
+                xhr.onabort = (ev) => {
+                    console.log('abort', ev);
+                  resolve(false);
+                };
+
+                xhr.ontimeout = (_) => {
+                  resolve(false);
+                };
+
+                xhr.open('GET', url, true);
+                setOutput('LOADING');
+                xhr.send();
+                setOutput('LOADED');
+            });
+        }
+    </script>
+</head>
+<body>
+
+<button onclick="onClickHandler()">Click me!</button>
+
+<div id="info">...</div>
+</body>
+</html>
