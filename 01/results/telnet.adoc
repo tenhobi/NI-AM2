@@ -1,0 +1,61 @@
+= HW1
+
+== Stateful
+
+[source, shell]
+----
+tenhobi@tatooine:~$ telnet localhost 8124
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+open
+opened
+add
+Warning: You can only add item ids (integer).
+add a
+Error: Wrong request.
+add 3
+added 3
+add 1
+added 1
+add 7
+added 7
+process
+processed with items 3, 1, 7
+----
+
+== Stateless
+
+[source, shell]
+----
+tenhobi@tatooine:~$ telnet localhost 8124
+Trying 127.0.0.1...
+Connected to localhost.
+Escape character is '^]'.
+open
+Warning: Wrong request syntax.
+open 1 1
+opened order=1
+open 1
+Warning: Order ID already exists.
+open 2
+opened order=2
+open 2
+Warning: Order ID already exists.
+add 1 1
+added order=1, item=1
+add 1 2
+added order=1, item=2
+add 1 4
+added order=1, item=4
+add 1 3
+added order=1, item=3
+add 2 5
+added order=2, item=5
+add 1 1
+added order=2, item=1
+process 1
+processed order=1 with items 1, 2, 4, 3
+process 2
+processed order=2 with items 5, 1
+----

@@ -1,0 +1,14 @@
+{
+  "name": "ni-am2-bittnja3-hw-1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "stateful.js",
+  "scripts": {
+    "stateful": "node stateful",
+    "stateless": "node stateless"
+  },
+  "author": "Jan Bittner",
+  "license": "MIT",
+  "dependencies": {
+  }
+}
