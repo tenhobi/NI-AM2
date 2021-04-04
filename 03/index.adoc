@@ -1,1 +1,4 @@
-= HW3 - TBD!
+= HW3
+
+A simple implementation of HTTP response server
+using docker containers.

@@ -1,0 +1,66 @@
+## Build and run
+
+[source, shell]
+----
+tenhobi@tatooine:~/dev/NI-AM2/03/src$ docker build -t am2hw3 .
+Sending build context to Docker daemon  6.656kB
+Step 1/8 : FROM node:12.18-alpine
+ ---> e13d60032d4d
+Step 2/8 : ENV NODE_ENV=production
+ ---> Using cache
+ ---> a27c11728728
+Step 3/8 : WORKDIR /usr/src/app
+ ---> Using cache
+ ---> b3e26b2cdd91
+Step 4/8 : COPY ["package.json", "package-lock.json*", "npm-shrinkwrap.json*", "./"]
+ ---> Using cache
+ ---> 8d2280c9c066
+Step 5/8 : RUN npm install --production --silent && mv node_modules ../
+ ---> Using cache
+ ---> 83edbd7b08df
+Step 6/8 : COPY . .
+ ---> a7c08e93a75c
+Step 7/8 : EXPOSE 8888
+ ---> Running in a91568c9245b
+Removing intermediate container a91568c9245b
+ ---> bee2646260da
+Step 8/8 : CMD ["npm", "start"]
+ ---> Running in 30db7d6ab591
+Removing intermediate container 30db7d6ab591
+ ---> 7cac73194590
+Successfully built 7cac73194590
+Successfully tagged am2hw3:latest
+tenhobi@tatooine:~/dev/NI-AM2/03/src$ docker run -p 8080:8888 am2hw3
+
+> ni-am2-bittnja3-hw-3@1.0.0 start /usr/src/app
+> node server
+
+Saying hello to Amalko
+Saying hello to Zuzko
+Saying hello to Honza
+Saying hello to Adam
+----
+
+## Check container
+
+[source, shell]
+----
+tenhobi@tatooine:/mnt/c/Users/Honza$ docker container ls
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                    NAMES
+14687448f9e3   am2hw3    "docker-entrypoint.s…"   11 seconds ago   Up 10 seconds   0.0.0.0:8080->8888/tcp   quizzical_chatelet
+
+----
+
+## Curl from terminal
+
+[source, shell]
+----
+tenhobi@tatooine:/mnt/c/Users/Honza$ curl localhost:8080/Amalko
+Hello Amalko
+tenhobi@tatooine:/mnt/c/Users/Honza$ curl localhost:8080/Zuzko
+Hello Zuzko
+tenhobi@tatooine:/mnt/c/Users/Honza$ curl localhost:8080/Honza
+Hello Honza
+tenhobi@tatooine:/mnt/c/Users/Honza$ curl localhost:8080/Adam
+Hello Adam
+----

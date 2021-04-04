@@ -1,1 +1,5 @@
-= HW4 - TBD!
+= HW4
+
+A simple implementation of HTTP db response server
+using separate docker containers
+for server and db.

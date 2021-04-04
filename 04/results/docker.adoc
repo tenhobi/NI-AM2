@@ -1,0 +1,81 @@
+## Container for Redis
+
+[source, shell]
+----
+tenhobi@tatooine:~/dev/NI-AM2/04/src$ docker run --name redis1 -p 6379:6379 --hostname redis -d redis
+0d953cfbf1fba19c45f1189bc411eb9f30fd5e6032bbf94815429a29e89ff2b1
+tenhobi@tatooine:~/dev/NI-AM2/04/src$ docker run -it --link redis1:redis --name client1 redis sh
+# redis-cli -h redis
+redis:6379> set Tomas "Thakurova 9, 160 00, Prague"
+OK
+redis:6379> set Honza "Fitova adresa 123, Brno"
+OK
+redis:6379> set Anicka "U studanky 42, Olomouc"
+OK
+----
+
+## Server build and run
+
+[source, shell]
+----
+tenhobi@tatooine:~/dev/NI-AM2/04/src$ docker build -t am2hw4 .
+[+] Building 10.8s (10/10) FINISHED
+ => [internal] load build definition from Dockerfile                                              0.0s
+ => => transferring dockerfile: 38B                                                               0.0s
+ => [internal] load .dockerignore                                                                 0.0s
+ => => transferring context: 35B                                                                  0.0s
+ => [internal] load metadata for docker.io/library/node:12.18-alpine                             10.7s
+ => [1/5] FROM docker.io/library/node:12.18-alpine@sha256:abe347411c713e4a66846f351d426d65e2c93d  0.0s
+ => [internal] load build context                                                                 0.0s
+ => => transferring context: 100B                                                                 0.0s
+ => CACHED [2/5] WORKDIR /usr/src/app                                                             0.0s
+ => CACHED [3/5] COPY [package.json, package-lock.json*, npm-shrinkwrap.json*, ./]                0.0s
+ => CACHED [4/5] RUN npm install --production --silent && mv node_modules ../                     0.0s
+ => CACHED [5/5] COPY . .                                                                         0.0s
+ => exporting to image                                                                            0.0s
+ => => exporting layers                                                                           0.0s
+ => => writing image sha256:5fe5774b635477db755b13a4c818a389e9a198ac01e45634e569b2bd03dbe409      0.0s
+ => => naming to docker.io/library/am2hw4                                                         0.0s
+tenhobi@tatooine:~/dev/NI-AM2/04/src$ docker run --name am2hw4con -ti -p 8080:8888 --link redis1 am2hw4
+
+> ni-am2-bittnja3-hw-4@1.0.0 start /usr/src/app
+> node server
+
+Redis client connected
+person,Honza,address
+Address is 'Fitova adresa 123, Brno'
+
+person,neexistujici,address
+Address not found for 'neexistujici'
+
+huh
+person,Adela,address
+Address not found for 'Adela'
+
+person,Anicka,address
+Address is 'U studanky 42, Olomouc'
+
+person,tomas,address
+Address not found for 'tomas'
+
+person,Tomas,address
+Address is 'Thakurova 9, 160 00, Prague'
+----
+
+## Server calls
+
+[source, shell]
+----
+tenhobi@tatooine:/mnt/c/Users/Honza$ curl localhost:8080/person/Honza/address
+Address is 'Fitova adresa 123, Brno'
+tenhobi@tatooine:/mnt/c/Users/Honza$ curl localhost:8080/person/neexistujici/address
+Address not found for 'neexistujici'
+tenhobi@tatooine:/mnt/c/Users/Honza$ curl localhost:8080/huh
+tenhobi@tatooine:/mnt/c/Users/Honza$ curl localhost:8080/person/Adela/address
+Address not found for 'Adela'
+tenhobi@tatooine:/mnt/c/Users/Honza$ curl localhost:8080/person/Anicka/address
+Address is 'U studanky 42, Olomouc'
+tenhobi@tatooine:/mnt/c/Users/Honza$ curl localhost:8080/person/tomas/address
+Address not found for 'tomas'
+tenhobi@tatooine:/mnt/c/Users/Honza$ curl localhost:8080/person/Tomas/address
+----
