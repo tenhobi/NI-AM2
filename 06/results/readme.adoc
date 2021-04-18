@@ -10,8 +10,12 @@ tenhobi@tatooine:~/dev/NI-AM2/06/src$ npm start
 responded with file  index.html
 responded with file  /home/tenhobi/dev/NI-AM2/06/src/static/style.css
 responded with file  /home/tenhobi/dev/NI-AM2/06/src/static/wave.jpg
+responded with file  /home/tenhobi/dev/NI-AM2/06/src/static/nature.jpg
+responded with file  /home/tenhobi/dev/NI-AM2/06/src/static/monkey.jpg
 ----
 
 ## Browser
+
+In the screenshot, we can see how the HTTP/2 works. We can see benefits such as server push, multiplexing and HTTP/2 also enforces the HTTPS protocol.
 
 image::browser.png[]
