@@ -4,4 +4,4 @@ This task implements simple HTML page consisting of several resources,
 which is provided by a simple HTTP/2 server,
 that serves the page and pushes all its resources.
 
-xref:results/readme[Results]
+xref:06/results/readme#[Results]
