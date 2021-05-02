@@ -8,5 +8,3 @@
 * xref:06/index#[]
 * xref:07/index#[]
 * xref:08/index#[]
-* xref:09/index#[]
-* xref:10/index#[]
