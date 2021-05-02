@@ -1,6 +1,13 @@
 ## Simple Server-sent events
 
+This task implements simple Server-sent Events.
+
+The client (browser) uses the `EventSource` API,
+that subscribes to server that pushes `text/event-stream` messages.
+
 ### Server start
+
+Every 2 seconds, the server pushes some message.
 
 [source, shell]
 ----
@@ -16,5 +23,7 @@ tenhobi@tatooine:~/dev/NI-AM2/07/src$ npm start
 ----
 
 ### Client
+
+Clients get the pushed event stream messages and can proccess them.
 
 image::client.png[]
