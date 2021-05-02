@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NI-AM2 HW8 bittnja3</title>
+    <script>
+        const CLIENT_ID = '255827652711-2b5p1l1bh7riqe0qkemqhubjc685f9g1.apps.googleusercontent.com';
+        const CLIENT_SECRET = 'ywhpLTCYIqCjog_TL2e48JPc';
+        const REDIRECT_URI = 'https://localhost:8888/callback';
+        const OAUTH2_ENDPOINT = 'https://accounts.google.com/o/oauth2/v2/auth';
+        const SCOPE = 'https://www.googleapis.com/auth/contacts.readonly';
+
+        console.log(window.location.pathname);
+
+        function buttonCallback() {
+            window.location.replace(`${OAUTH2_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token&scope=${SCOPE}&include_granted_scopes=true&state=pass-troughvalue`);
+        }
+
+        function addContact(name, number) {
+            var node = document.createElement("p");
+            var textnode = document.createTextNode(`${name}: ${number}`);
+            node.appendChild(textnode);
+            document.getElementById("contacts").appendChild(node);
+        }
+
+        function processCallback(token) {
+            console.log(token);
+
+            fetch('https://people.googleapis.com/v1/people/me/connections?personFields=names,phoneNumbers&pageSize=1000', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                data.connections.map(contact => {
+                    if (contact.hasOwnProperty('names') && contact.hasOwnProperty('phoneNumbers')) {
+                        addContact(contact.names[0].displayName, contact.phoneNumbers[0].canonicalForm);
+                    }
+                });
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+
+        if (window.location.pathname === '/callback') {
+            // Parse url paramaters.
+            const queryString = window.location.hash;
+            const urlParams = new URLSearchParams(queryString);
+            if (urlParams.has('access_token')) {
+                processCallback(urlParams.get('access_token'));
+            };
+        }
+    </script>
+</head>
+<body>
+
+<button onclick="buttonCallback()">Google login</button>
+
+<h2>Contacts:</h2>
+
+<div id="contacts">
+
+</div>
+</body>
+</html>

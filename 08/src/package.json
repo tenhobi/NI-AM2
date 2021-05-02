@@ -1,8 +1,8 @@
 {
-  "name": "ni-am2-bittnja3-hw-6",
+  "name": "ni-am2-bittnja3-hw-8",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server"
   },
