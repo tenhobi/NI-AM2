@@ -1,1 +1,5 @@
-= HW7 - TBD!
+= HW7
+
+This task implements simple Server-sent Events.
+
+xref:07/results/readme#[Results]

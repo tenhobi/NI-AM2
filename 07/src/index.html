@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>NI-AM2 HW7 bittnja3</title>
+    <script>
+        // Declare an EventSource
+        const eventSource = new EventSource('http://localhost:8888');
+
+        eventSource.addEventListener('bittnja3Event', (e) => {
+            var node = document.createElement("p");
+            var textnode = document.createTextNode(e.data);
+            node.appendChild(textnode);
+            document.getElementById("log").appendChild(node);
+            console.log(e.data);
+        });
+    </script>
+</head>
+<body>
+<h2>Log:</h2>
+
+<div id="log">
+
+</div>
+</body>
+</html>
