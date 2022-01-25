@@ -1,6 +1,6 @@
-# BI-AM2
+# NI-AM2
 
-My work on BI-AM2 in semester B202 at [FIT CTU](https://fit.cvut.cz/en).
+My work on NI-AM2 in semester B202 at [FIT CTU](https://fit.cvut.cz/en).
 
 ## TL;DR
 
